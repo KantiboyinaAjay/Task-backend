@@ -35,6 +35,11 @@ const addTask = async (req, res) => {
 const getProjects = async (req, res) => {
   try {
     const response = await projectSchema.find();
+    res.set({
+      'Cache-Control': 'no-cache, no-store, must-revalidate',
+      'Pragma': 'no-cache',
+      'Expires': '0'
+    });
     res.status(200).send(response.length ? response : []);
   } catch (err) {
     res.status(500).send({ msg: "Error retrieving projects" });
