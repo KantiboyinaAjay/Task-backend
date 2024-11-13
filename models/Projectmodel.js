@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 
+
 const taksSchema = new mongoose.Schema({
   taskName: {
     type: String,
@@ -44,6 +45,7 @@ const projectSchema = new mongoose.Schema({
     default: [],
   },
 });
+
 
 const taskModel = mongoose.model("tasks", taksSchema);
 const ProjectSchema = mongoose.model("projectSchema", projectSchema);

@@ -1,5 +1,4 @@
 const {ProjectSchema , taskModel} = require('../models/Projectmodel');
-// const { taskModel } = require('../models/Taskmodel');
 
 const addProjects = async (req, res) => {
   const { title, pid, tasks } = req.body;
