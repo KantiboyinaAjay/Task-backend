@@ -1,9 +1,9 @@
-const projectSchema = require('../models/Projectmodel');
-const { taskModel } = require('../models/Taskmodel');
+const {ProjectSchema , taskModel} = require('../models/Projectmodel');
+// const { taskModel } = require('../models/Taskmodel');
 
 const addProjects = async (req, res) => {
   const { title, pid, tasks } = req.body;
-  const newProject = projectSchema({
+  const newProject = ProjectSchema({
     title: title,
     pid: pid,
     tasks: tasks,
@@ -14,6 +14,7 @@ const addProjects = async (req, res) => {
 
 const addTask = async (req, res) => {
   const { pid, taskName, startDate, deadlineDate, status, taskId } = req.body;
+
   const newTask = taskModel({
     taskName: taskName,
     startDate: startDate,
@@ -22,8 +23,9 @@ const addTask = async (req, res) => {
     taskId: taskId,
     pid: pid,
   });
+
   const response = await newTask.save();
-  const updatedProject = await projectSchema.findOneAndUpdate(
+  const updatedProject = await ProjectSchema.findOneAndUpdate(
     { pid: response.pid },
     { $push: { tasks: response.taskId } },
     { new: true }
@@ -33,7 +35,7 @@ const addTask = async (req, res) => {
 
 const getProjects = async (req, res) => {
   try {
-    const response = await projectSchema.find();
+    const response = await ProjectSchema.find();
     res.set({
       'Cache-Control': 'no-cache, no-store, must-revalidate',
       'Pragma': 'no-cache',
@@ -89,7 +91,7 @@ const deleteProject = async (req, res) => {
   const { pid } = req.params;
   try {
     await deleteTasksBeasedonProject(pid);
-    await projectSchema.findOneAndDelete({ pid: pid });
+    await ProjectSchema.findOneAndDelete({ pid: pid });
   } 
   catch (e) {
     res.status(500).json({ status: "failed", message: e });
