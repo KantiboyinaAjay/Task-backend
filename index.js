@@ -4,6 +4,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const Router = require('./Routes/routes');
 const app = express();
+const dotenv = require('dotenv').config();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -12,9 +13,7 @@ app.use(cors());
 app.use("/", Router);
 
 mongoose
-  .connect(
-    "mongodb+srv://ajaykantiboyina:Ajay%406203@cluster0.vleuyp5.mongodb.net/"
-  )
+  .connect(process.env.Database_URL)
   .then(() => {
     console.log("Connected to Mongo DB");
     app.listen(8000, () => {
