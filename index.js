@@ -13,7 +13,10 @@ app.use(cors());
 app.use("/", Router);
 
 mongoose
-  .connect(process.env.Database_URL)
+  .connect(
+    process.env.Database_URL,
+    { useNewUrlParser: true, useUnifiedTopology: true }
+  )
   .then(() => {
     console.log("Connected to Mongo DB");
     app.listen(8000, () => {
