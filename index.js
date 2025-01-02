@@ -19,11 +19,10 @@ mongoose
   )
   .then(() => {
     console.log("Connected to Mongo DB");
+    app.listen(8000, () => {
+      console.log(`App running on port: 8000`);
+    });
   })
   .catch((err) => {
     console.error(err);
   });
-
-app.listen(8000, () => {
-  console.log(`App running on port: 8000`);
-});
